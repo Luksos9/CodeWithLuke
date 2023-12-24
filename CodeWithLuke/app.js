@@ -11,13 +11,10 @@ const challengeRoutes = require('./challengeRoutes');
 const authRoutes = require('./authRoutes');
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/CodeWithLuke', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true
-})
+mongoose.connect('mongodb://localhost:27017/CodeWithLuke') // Adjust the database name as necessary
 .then(() => console.log('MongoDB Connected'))
 .catch(err => console.log(err));
+
 
 // Middleware to parse JSON bodies
 app.use(express.json());
