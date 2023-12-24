@@ -10,7 +10,21 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+
+    // Add new fields for profile information
+    bio: {
+      type: String,
+      required: false
+    },
+    website: {
+      type: String,
+      required: false
+    },
+    profilePicture: {
+      type: String,
+      required: false
+    },
   // You can add more fields here
 });
 
