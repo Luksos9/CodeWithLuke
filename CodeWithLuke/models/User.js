@@ -25,6 +25,12 @@ const UserSchema = new mongoose.Schema({
       type: String,
       required: false
     },
+
+    role: {
+      type: String,
+      default: 'user',
+      enum: ['user', 'admin', 'moderator']
+    }
   // You can add more fields here
 });
 

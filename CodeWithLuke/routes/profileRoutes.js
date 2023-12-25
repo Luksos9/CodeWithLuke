@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const User = require('./models/User');
+const User = require('../models/User');
 const bcrypt = require('bcrypt');
-const authMiddleware = require('./authMiddleware');
+const authMiddleware = require('../middlewares/authMiddleware');
 
 // Apply the middleware to the routes that require authentication
 router.get('/', authMiddleware, async (req, res) => {

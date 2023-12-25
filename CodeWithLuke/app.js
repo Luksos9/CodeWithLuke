@@ -6,11 +6,18 @@ const mongoose = require('mongoose');
 const app = express();
 
 // Require route modules
-const coursesRoutes = require('./coursesRoutes');
-const forumRoutes = require('./forumRoutes');
-const challengeRoutes = require('./challengeRoutes');
-const authRoutes = require('./authRoutes');
-const profileRoutes = require('./profileRoutes');
+const coursesRoutes = require('./routes/coursesRoutes');
+const forumRoutes = require('./routes/forumRoutes');
+const challengeRoutes = require('./routes/challengeRoutes');
+const authRoutes = require('./routes/authRoutes');
+const profileRoutes = require('./routes/profileRoutes');
+
+// Make sure adminRoutes is a function that takes a router and adds routes to it
+const adminRoutes = require('./routes/adminRoutes')(express.Router());
+
+// Require middleware
+const authMiddleware = require('./middlewares/authMiddleware');
+const checkRole = require('./middlewares/roleMiddleware');
 
 
 // Connect to MongoDB
@@ -32,6 +39,7 @@ app.use('/forum', forumRoutes);
 app.use('/challenges', challengeRoutes);
 app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
+app.use('/admin', adminRoutes);
 
 
 // Start the server

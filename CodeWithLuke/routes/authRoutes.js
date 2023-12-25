@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const User = require('./models/User');
+const User = require('../models/User');
 const bcrypt = require('bcrypt');
 
 
@@ -23,14 +23,15 @@ router.post('/login', async (req, res) => {
 
     const payload = {
       user: {
-        id: user.id
+        id: user.id,
+        role: user.role
       }
     };
 
     jwt.sign(
       payload,
-      process.env.JWT_SECRET, // Make sure to have a JWT_SECRET in your .env
-      { expiresIn: '5h' }, // Token expiration
+      process.env.JWT_SECRET,
+      { expiresIn: '5h' },
       (err, token) => {
         if (err) throw err;
         res.json({ token });
@@ -54,10 +55,11 @@ router.post('/register', async (req, res) => {
       if (user) {
         return res.status(400).send('User already exists');
       }
-  
+
       user = new User({
         username,
-        password
+        password,
+        role: req.body.role || 'user'
       });
   
       // Save user with hashed password
@@ -66,7 +68,7 @@ router.post('/register', async (req, res) => {
       // Create token
       const payload = { user: { id: user.id } };
       jwt.sign(
-        payload,
+        { user: { id: user.id, role: user.role } }, // Include the role here
         process.env.JWT_SECRET,
         { expiresIn: '5h' },
         (err, token) => {
