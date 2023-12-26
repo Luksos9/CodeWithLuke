@@ -30,8 +30,24 @@ const UserSchema = new mongoose.Schema({
       type: String,
       default: 'user',
       enum: ['user', 'admin', 'moderator']
+    },
+
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      match: [/.+\@.+\..+/, 'Please fill a valid email address'] // This regex checks for a valid email format
+    },
+
+    resetPasswordToken: {
+      type: String,
+      required: false
+    },
+    resetPasswordExpires: {
+      type: Date,
+      required: false
     }
-  // You can add more fields here
+  
 });
 
 // Pre-save hook to hash the password before saving
